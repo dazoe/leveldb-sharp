@@ -14,3 +14,4 @@ missing
 leveldb-sharp.pc
 *.pidb
 *.userprefs
+obj/
