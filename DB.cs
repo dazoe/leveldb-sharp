@@ -67,7 +67,8 @@ namespace LevelDB
                 Put(null, key, value);
             }
         }
-
+        
+        public DB(string path) : this(Options.Default, path) {}
         public DB(Options options, string path)
         {
             if (options == null) {
