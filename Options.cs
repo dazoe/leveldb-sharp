@@ -57,7 +57,6 @@ namespace LevelDB
         // bool create_if_missing;
         public bool CreateIfMissing {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_create_if_missing(Handle, value);
             }
         }
@@ -69,7 +68,6 @@ namespace LevelDB
         // bool error_if_exists;
         public bool ErrorIfExists {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_error_if_exists(Handle, value);
             }
         }
@@ -85,7 +83,6 @@ namespace LevelDB
         // bool paranoid_checks;
         public bool ParanoidChecks {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_paranoid_checks(Handle, value);
             }
         }
@@ -109,7 +106,6 @@ namespace LevelDB
         // size_t write_buffer_size;
         public int WriteBufferSize {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_write_buffer_size(Handle, value);
             }
         }
@@ -123,7 +119,6 @@ namespace LevelDB
         // int max_open_files;
         public int MaxOpenFiles {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_max_open_files(Handle, value);
             }
         }
@@ -139,7 +134,6 @@ namespace LevelDB
         // Cache* block_cache;
         public Cache BlockCache {
             set {
-        		_newIfDefault();
                 // keep a reference to Cache so it doesn't get GCed
                 f_BlockCache = value;
                 if (value == null) {
@@ -161,7 +155,6 @@ namespace LevelDB
         // size_t block_size;
         public int BlockSize {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_block_size(Handle, value);
             }
         }
@@ -175,7 +168,6 @@ namespace LevelDB
         // int block_restart_interval;
         public int BlockRestartInterval {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_write_buffer_size(Handle, value);
             }
         }
@@ -192,7 +184,6 @@ namespace LevelDB
         // CompressionType compression;
         public CompressionType Compression {
             set {
-        		_newIfDefault();
                 Native.leveldb_options_set_compression(Handle, (int) value);
             }
         }
@@ -207,20 +198,11 @@ namespace LevelDB
             Native.leveldb_options_destroy(Handle);
         }
 
-        private void _newIfDefault() {
-        	if (this == _default) {
-        		Handle = Native.leveldb_options_create();
-        		this.CreateIfMissing = true;
-        	}
-        }
-        private static Options _default;
         public static Options Default {
         	get {
-        		if (_default == null) {
-        			_default = new Options();
-        			_default.CreateIfMissing = true;
-        		}
-        		return _default;
+        		Options result = new Options();
+        		result.CreateIfMissing = true;
+        		return result;
         	}
         }
     }
